@@ -137,3 +137,25 @@ body.hovering .cursor-outline {
   background-color: var(--bg); 
   border-color: rgba(255,255,255,0.03);
 }
+/* =========================================
+   PERFORMANCE OPTIMIZATIONS
+   Add class="hardware-accel" to any lagging element
+   ========================================= */
+.hardware-accel {
+  /* Tells the browser: "This is going to move, get the GPU ready" */
+  will-change: transform;
+  
+  /* Forces the element onto its own GPU layer (The "Hack") */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Apply directly to known laggy elements automatically */
+.cursor-dot, 
+.cursor-outline, 
+.magnetic-btn,
+.project-card {
+  will-change: transform;
+  transform: translateZ(0);
+}
