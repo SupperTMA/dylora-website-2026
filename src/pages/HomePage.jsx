@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useScrollAnimations } from '../hooks/useScrollAnimations';
 
 import Preloader from '../components/Layout/Preloader';
+import Navbar from '../components/Layout/Navbar';
 import Hero from '../components/Home/Hero';
 import Marquee from '../components/Home/Marquee';
 import Services from '../components/Home/Services';
@@ -45,6 +46,7 @@ const HomePage = () => {
          Even though sessionStorage is now "true", 'isFirstVisit' stays TRUE for this session,
          ensuring the Hero plays the LONG animation.
       */}
+      <Navbar />
       <Hero startAnimation={canStartHero} isFirstLoad={isFirstVisit} />
 
       <Marquee />
