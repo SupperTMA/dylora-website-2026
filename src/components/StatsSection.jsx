@@ -42,11 +42,12 @@ export default function StatsSection() {
   return (
     <section ref={ref} className="mt-36 relative">
 
-      {/* ambient animated glow */}
+      {/* Ambient Accent Glow */}
       <motion.div
-        animate={{ opacity: [0.3, 0.6, 0.3] }}
+        animate={{ opacity: [0.25, 0.5, 0.25] }}
         transition={{ duration: 6, repeat: Infinity }}
-        className="absolute inset-0 -z-10 bg-cyan-400/10 blur-3xl"
+        className="absolute inset-0 -z-10
+                   bg-[var(--accent)]/10 blur-3xl"
       />
 
       {/* Heading */}
@@ -57,13 +58,15 @@ export default function StatsSection() {
         viewport={{ once: true }}
         className="text-center mb-16"
       >
-        <span className="inline-block mb-4 px-4 py-1 rounded-full
-                         text-xs tracking-widest uppercase
-                         bg-cyan-400/10 text-cyan-400">
+        <span
+          className="inline-block mb-4 px-4 py-1 rounded-full
+                     text-xs tracking-widest uppercase
+                     bg-[var(--accent)]/10 text-[var(--accent)]"
+        >
           Our Impact
         </span>
 
-        <h2 className="text-4xl md:text-5xl font-extrabold">
+        <h2 className="text-4xl md:text-5xl font-extrabold text-white">
           Numbers That Speak
         </h2>
 
@@ -97,33 +100,34 @@ export default function StatsSection() {
             transition={{ type: "spring", stiffness: 180 }}
             className="group relative rounded-2xl p-8 text-center
                        bg-[#0b0b0b] border border-white/10
-                       hover:border-cyan-400/40
-                       hover:shadow-[0_0_60px_rgba(34,211,238,0.25)]"
+                       hover:border-[var(--accent)]/40
+                       hover:shadow-[0_0_60px_rgba(217,249,157,0.25)]"
           >
 
-            {/* animated accent line */}
+            {/* Accent Top Line */}
             <motion.div
               initial={{ scaleX: 0 }}
               whileInView={{ scaleX: 1 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="absolute top-0 left-0 h-[2px] w-full
-                         origin-left bg-gradient-to-r
-                         from-cyan-400 to-teal-300"
+                         origin-left
+                         bg-[var(--accent)]"
             />
 
-            {/* glow */}
-            <div className="absolute inset-0 rounded-2xl
-                            bg-cyan-400/10 opacity-0
-                            group-hover:opacity-100
-                            blur-2xl transition" />
+            {/* Hover Glow */}
+            <div
+              className="absolute inset-0 rounded-2xl
+                         bg-[var(--accent)]/10 opacity-0
+                         group-hover:opacity-100
+                         blur-2xl transition"
+            />
 
-            {/* number */}
+            {/* Number */}
             <motion.h3
               whileHover={{ scale: 1.08 }}
               transition={{ type: "spring", stiffness: 200 }}
               className="relative text-5xl font-extrabold
-                         bg-gradient-to-r from-cyan-400 to-teal-300
-                         bg-clip-text text-transparent"
+                         text-[var(--accent)]"
             >
               <CountUp
                 value={item.value}
@@ -132,9 +136,11 @@ export default function StatsSection() {
               />
             </motion.h3>
 
-            {/* label */}
-            <p className="relative text-gray-400 mt-4 uppercase
-                          tracking-widest text-xs">
+            {/* Label */}
+            <p
+              className="relative text-gray-400 mt-4 uppercase
+                         tracking-widest text-xs"
+            >
               {item.label}
             </p>
           </motion.div>

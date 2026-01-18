@@ -16,8 +16,8 @@ const ProjectCard = ({ project, index }) => {
       className="group relative rounded-2xl overflow-hidden
                  bg-gradient-to-b from-white/[0.04] to-black
                  border border-white/10
-                 hover:border-cyan-400/40
-                 hover:shadow-[0_20px_60px_rgba(34,211,238,0.18)]
+                 hover:border-[var(--accent)]/40
+                 hover:shadow-[0_20px_60px_rgba(217,249,157,0.18)]
                  transition-all duration-500 flex flex-col h-full"
     >
       {/* IMAGE */}
