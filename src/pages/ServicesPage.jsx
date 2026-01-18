@@ -145,10 +145,10 @@ const ServicesPage = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <span className="text-[#C5FF55]">OUR </span>
+          <span className="text-[#D9F99D]">OUR </span>
           <span className="text-white">SERVICES</span>
           <br />
-          <span className="text-[#C5FF55]">& </span>
+          <span className="text-[#D9F99D]">& </span>
           <span className="text-white">SOLUTIONS</span>
         </motion.h1>
         
@@ -170,7 +170,7 @@ const ServicesPage = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => navigate('/contact')}
-          className="px-8 py-3 bg-transparent border-2 border-[#C5FF55] text-[#C5FF55] font-semibold rounded-lg hover:bg-[#C5FF55] hover:text-black transition-all duration-300 cursor-pointer"
+          className="px-8 py-3 bg-transparent border-2 border-[#D9F99D] text-[#D9F99D] font-semibold rounded-lg hover:bg-[#D9F99D] hover:text-black transition-all duration-300 cursor-pointer"
         >
           Get Free Consultation
         </motion.button>
@@ -208,7 +208,7 @@ const ServicesPage = () => {
                 transformStyle: "preserve-3d",
                 perspective: "1000px"
               }}
-              className="relative bg-[#1a1a1a] border border-gray-800 rounded-lg p-8 text-center hover:border-[#C5FF55] transition-all duration-300 group cursor-pointer overflow-hidden"
+              className="relative bg-[#1a1a1a] border border-gray-800 rounded-lg p-8 text-center hover:border-[#D9F99D] transition-all duration-300 group cursor-pointer overflow-hidden"
             >
               {/* Background Image with Overlay */}
               <div className="absolute inset-0 overflow-hidden rounded-lg">
@@ -236,10 +236,11 @@ const ServicesPage = () => {
                 }}
                 style={{ transformStyle: "preserve-3d" }}
               >
-                <div className="w-20 h-20 mx-auto bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl flex items-center justify-center text-4xl border border-gray-700 group-hover:border-[#C5FF55] group-hover:shadow-lg group-hover:shadow-[#C5FF55]/30 transition-all duration-300"
+                <div className="w-20 h-20 mx-auto bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl flex items-center justify-center text-4xl border border-gray-700 group-hover:border-[#D9F99D] group-hover:shadow-lg group-hover:shadow-[#D9F99D]/30 transition-all duration-300"
                   style={{ 
                     transform: "translateZ(20px)",
-                    boxShadow: "0 10px 30px rgba(197, 255, 85, 0)"
+                    // Updated RGBA for D9F99D (217, 249, 157)
+                    boxShadow: "0 10px 30px rgba(217, 249, 157, 0)"
                   }}
                 >
                   {service.icon}
@@ -248,7 +249,7 @@ const ServicesPage = () => {
 
               {/* Title with 3D effect */}
               <motion.h3 
-                className="relative z-10 text-xl font-bold mb-3 group-hover:text-[#C5FF55] transition-colors duration-300"
+                className="relative z-10 text-xl font-bold mb-3 group-hover:text-[#D9F99D] transition-colors duration-300"
                 style={{ transform: "translateZ(10px)" }}
               >
                 {service.title}
@@ -262,7 +263,7 @@ const ServicesPage = () => {
               {/* Learn More with arrow animation */}
               <motion.button
                 onClick={() => navigate('/contact')}
-                className="relative z-10 text-[#C5FF55] text-sm font-semibold inline-flex items-center gap-2 group/link cursor-pointer bg-transparent border-none"
+                className="relative z-10 text-[#D9F99D] text-sm font-semibold inline-flex items-center gap-2 group/link cursor-pointer bg-transparent border-none"
                 whileHover={{ x: 5 }}
               >
                 Learn More
@@ -281,20 +282,20 @@ const ServicesPage = () => {
 
               {/* Animated Glow Effect */}
               <motion.div 
-                className="absolute inset-0 bg-gradient-to-t from-[#C5FF55]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg pointer-events-none"
+                className="absolute inset-0 bg-gradient-to-t from-[#D9F99D]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg pointer-events-none"
                 initial={{ opacity: 0 }}
                 whileHover={{ opacity: 1 }}
               />
 
               {/* 3D Corner decoration */}
               <motion.div 
-                className="absolute top-0 right-0 w-20 h-20 bg-[#C5FF55]/10 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                className="absolute top-0 right-0 w-20 h-20 bg-[#D9F99D]/10 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                 whileHover={{ scale: 1.2 }}
               />
 
               {/* Animated particles */}
               <motion.div
-                className="absolute top-2 right-2 w-2 h-2 bg-[#C5FF55] rounded-full opacity-0 group-hover:opacity-100"
+                className="absolute top-2 right-2 w-2 h-2 bg-[#D9F99D] rounded-full opacity-0 group-hover:opacity-100"
                 animate={{
                   y: [0, -20, 0],
                   opacity: [0, 1, 0]
@@ -306,7 +307,7 @@ const ServicesPage = () => {
                 }}
               />
               <motion.div
-                className="absolute bottom-2 left-2 w-2 h-2 bg-[#C5FF55] rounded-full opacity-0 group-hover:opacity-100"
+                className="absolute bottom-2 left-2 w-2 h-2 bg-[#D9F99D] rounded-full opacity-0 group-hover:opacity-100"
                 animate={{
                   y: [0, 20, 0],
                   opacity: [0, 1, 0]
@@ -361,7 +362,7 @@ const ServicesPage = () => {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: (index % projects.length) * 0.1 }}
                   whileHover={{ y: -15, scale: 1.03 }}
-                  className="relative bg-[#1a1a1a] border border-gray-800 rounded-lg overflow-hidden hover:border-[#C5FF55] transition-all duration-300 group cursor-pointer flex-shrink-0 w-[350px]"
+                  className="relative bg-[#1a1a1a] border border-gray-800 rounded-lg overflow-hidden hover:border-[#D9F99D] transition-all duration-300 group cursor-pointer flex-shrink-0 w-[350px]"
                 >
                   {/* Image with zoom effect */}
                   <div className="relative h-48 overflow-hidden">
@@ -376,7 +377,7 @@ const ServicesPage = () => {
                     
                     {/* Overlay glow effect */}
                     <motion.div 
-                      className="absolute inset-0 bg-[#C5FF55]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      className="absolute inset-0 bg-[#D9F99D]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                       initial={{ opacity: 0 }}
                       whileHover={{ opacity: 1 }}
                     />
@@ -384,7 +385,7 @@ const ServicesPage = () => {
 
                   {/* Content */}
                   <div className="p-6">
-                    <h3 className="text-xl font-bold mb-2 group-hover:text-[#C5FF55] transition-colors duration-300">
+                    <h3 className="text-xl font-bold mb-2 group-hover:text-[#D9F99D] transition-colors duration-300">
                       {project.title}
                     </h3>
                     <p className="text-gray-400 text-sm mb-4 whitespace-pre-line">
@@ -396,7 +397,7 @@ const ServicesPage = () => {
                       {[...Array(project.rating)].map((_, i) => (
                         <motion.span 
                           key={i}
-                          className="text-[#C5FF55] text-lg"
+                          className="text-[#D9F99D] text-lg"
                           initial={{ opacity: 0, scale: 0 }}
                           whileInView={{ opacity: 1, scale: 1 }}
                           transition={{ delay: (index % projects.length) * 0.1 + i * 0.1 }}
@@ -410,7 +411,7 @@ const ServicesPage = () => {
 
                   {/* Bottom glow line */}
                   <motion.div 
-                    className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#C5FF55] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#D9F99D] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   />
                 </motion.div>
               ))}
@@ -505,7 +506,8 @@ const ServicesPage = () => {
           whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => navigate('/contact')}
-          className="px-8 py-3 bg-[#C5FF55] text-black font-bold rounded-lg hover:bg-[#b8f044] transition-all duration-300 cursor-pointer shadow-lg shadow-[#C5FF55]/20 hover:shadow-[#C5FF55]/40"
+          // Updated hover to a darker lime (bef264) to match the D9F99D theme
+          className="px-8 py-3 bg-[#D9F99D] text-black font-bold rounded-lg hover:bg-[#bef264] transition-all duration-300 cursor-pointer shadow-lg shadow-[#D9F99D]/20 hover:shadow-[#D9F99D]/40"
         >
           Get Started Today
         </motion.button>
@@ -523,7 +525,7 @@ const ServicesPage = () => {
           repeat: Infinity,
           ease: "easeInOut"
         }}
-        className="absolute top-1/4 right-20 w-64 h-64 bg-[#C5FF55]/10 rounded-full blur-3xl pointer-events-none"
+        className="absolute top-1/4 right-20 w-64 h-64 bg-[#D9F99D]/10 rounded-full blur-3xl pointer-events-none"
       />
       
       <motion.div
@@ -538,7 +540,7 @@ const ServicesPage = () => {
           ease: "easeInOut",
           delay: 1
         }}
-        className="absolute bottom-1/3 left-20 w-64 h-64 bg-[#C5FF55]/10 rounded-full blur-3xl pointer-events-none"
+        className="absolute bottom-1/3 left-20 w-64 h-64 bg-[#D9F99D]/10 rounded-full blur-3xl pointer-events-none"
       />
 
       <motion.div
@@ -552,7 +554,7 @@ const ServicesPage = () => {
           ease: "easeInOut",
           delay: 2
         }}
-        className="absolute top-1/2 left-1/2 w-96 h-96 bg-[#C5FF55]/5 rounded-full blur-3xl pointer-events-none"
+        className="absolute top-1/2 left-1/2 w-96 h-96 bg-[#D9F99D]/5 rounded-full blur-3xl pointer-events-none"
       />
     </div>
   );
