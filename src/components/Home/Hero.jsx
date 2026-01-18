@@ -3,48 +3,58 @@ import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import MagneticButton from '../UI/MagneticButton';
 
-const Hero = () => {
+// 1. ACCEPT THE NEW PROP 'isFirstLoad'
+const Hero = ({ startAnimation, isFirstLoad }) => {
   const containerRef = useRef(null);
   
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      // SELECTORS
-      const textSpans = containerRef.current.querySelectorAll('.reveal-text span');
-      const footer = containerRef.current.querySelector('.hero-footer');
+      // FORCE INITIAL HIDDEN STATE
+      gsap.set(".reveal-text span", { y: "100%" });
+      gsap.set(".hero-footer", { opacity: 0, y: 20 });
+      gsap.set(".reveal-meta", { opacity: 0 });
+      gsap.set(".hero-bg-grid", { opacity: 0 });
+      
+      if (startAnimation) {
+        const tl = gsap.timeline();
 
-      // ANIMATION SEQUENCE
-      // We use a small delay (0.2s) so the page has time to render before we start moving things.
-      const tl = gsap.timeline({ delay: 0.2 });
+        // 2. USE THE PROP FOR PRECISE TIMING
+        // First Load: 3.2s (Cinematic)
+        // Returning: 0.5s (Snappy)
+        const gridDuration = isFirstLoad ? 3.2 : 0.5;
+        const textDuration = isFirstLoad ? 1.2 : 0.8;
 
-      // 1. Ensure initial state is hidden (prevents flash of content)
-      gsap.set(textSpans, { y: "100%" });
-      gsap.set(footer, { opacity: 0, y: 20 });
-
-      // 2. Animate Text Up
-      tl.to(textSpans, {
-        y: "0%",
-        duration: 1.2,
-        stagger: 0.1, // Stagger each line by 0.1s
-        ease: "power4.out"
-      })
-      // 3. Animate Footer In (overlapping slightly with text)
-      .to(footer, {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: "power3.out"
-      }, "-=0.8");
-
+        tl.to(".reveal-meta", { 
+          opacity: 1, 
+          duration: 1 
+        })
+        .to(".hero-bg-grid", {
+          opacity: 0.2, 
+          duration: gridDuration, // <--- DETERMINISTIC DURATION
+          ease: "power2.out"
+        }, "<") 
+        .to(".reveal-text span", {
+          y: "0%",
+          duration: textDuration,
+          stagger: 0.1,
+          ease: "power4.out"
+        }, isFirstLoad ? "-=0.8" : "-=0.4") // Faster overlap for returning users
+        .to(".hero-footer", {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power3.out"
+        }, "-=0.8");
+      }
     }, containerRef);
 
-    // Cleanup when leaving the page
     return () => ctx.revert();
-  }, []);
+  }, [startAnimation, isFirstLoad]); // Add isFirstLoad to dependency array
 
   return (
     <header ref={containerRef} className="relative min-h-screen flex flex-col pt-40 pb-12 px-6 overflow-hidden">
       {/* Background Grid */}
-      <div className="absolute inset-0 z-0 opacity-20" 
+      <div className="hero-bg-grid absolute inset-0 z-0 opacity-0" 
            style={{ 
              backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
              backgroundSize: '50px 50px'
@@ -54,7 +64,7 @@ const Hero = () => {
       <div className="max-w-[1800px] mx-auto w-full h-full flex flex-col justify-between flex-grow relative z-10">
         
         {/* Top Meta Data */}
-        <div className="flex justify-between font-mono text-xs text-gray-500 mb-12 border-b border-white/10 pb-4 reveal-meta">
+        <div className="flex justify-between font-mono text-xs text-gray-500 mb-12 border-b border-white/10 pb-4 reveal-meta opacity-0">
           <span>TRANSFORMING IDEAS</span>
           <span className="text-accent animate-pulse">● ONLINE</span>
           <span>MUMBAI, IN</span>
@@ -63,15 +73,14 @@ const Hero = () => {
         {/* Big Headline */}
         <div>
           <h1 className="font-display font-extrabold text-[clamp(4rem,9vw,10rem)] tracking-tighter uppercase text-white mix-blend-difference leading-[0.9] py-4">
-            {/* 'block' class is crucial for transforms to work on spans */}
-            <div className="reveal-text"><span className="block">Transform</span></div>
-            <div className="reveal-text"><span className="text-outline block">Ideas Into</span></div>
-            <div className="reveal-text"><span className="text-accent block">Digital Reality</span></div>
+            <div className="reveal-text overflow-hidden"><span className="block translate-y-full">Transform</span></div>
+            <div className="reveal-text overflow-hidden"><span className="text-outline block translate-y-full">Ideas Into</span></div>
+            <div className="reveal-text overflow-hidden"><span className="text-accent block translate-y-full">Digital Reality</span></div>
           </h1>
         </div>
 
         {/* Footer Area */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mt-12 border-t border-white/10 pt-12 items-start hero-footer opacity-0">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mt-12 border-t border-white/10 pt-12 items-start hero-footer opacity-0 translate-y-5">
           <div className="md:col-span-5">
             <p className="text-xl leading-relaxed text-gray-300">
               We deliver cutting-edge IT solutions including Web Development, Mobile Apps, Game Development, and Digital Marketing for businesses worldwide.
