@@ -51,7 +51,7 @@ export default function ContactPage() {
     <div className="min-h-screen bg-black text-white">
       {/* HERO */}
       <section className="text-center pt-32 pb-20 px-6">
-        <motion.h1 {...motionPreset()} className="text-4xl md:text-5xl font-bold text-lime-400">
+        <motion.h1 {...motionPreset()} className="text-4xl md:text-5xl font-bold text-[#D9F99D]">
           Get in Touch <span className="text-white">With Us</span>
         </motion.h1>
 
@@ -80,7 +80,7 @@ export default function ContactPage() {
             whileHover={{ scale: 1.05 }}
             className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 text-center"
           >
-            <p className="text-3xl font-bold text-lime-400">{item.value}</p>
+            <p className="text-3xl font-bold text-[#D9F99D]">{item.value}</p>
             <p className="text-sm text-gray-400 mt-2">{item.label}</p>
           </motion.div>
         ))}
@@ -125,7 +125,7 @@ const motionPreset = () => ({
 function FormBlock({ form, errors, loading, success, onChange, onSubmit }) {
   return (
     <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-8">
-      <h2 className="text-2xl font-semibold text-lime-400 mb-6">Send Message</h2>
+      <h2 className="text-2xl font-semibold text-[#D9F99D] mb-6">Send Message</h2>
 
       <form onSubmit={onSubmit} className="grid gap-5">
         <div className="grid md:grid-cols-3 gap-4">
@@ -144,11 +144,11 @@ function FormBlock({ form, errors, loading, success, onChange, onSubmit }) {
         />
         {errors.message && <p className="text-red-400 text-sm">{errors.message}</p>}
 
-        <button className="bg-lime-400 text-black px-6 py-3 rounded w-fit hover:bg-lime-300">
+        <button className="bg-[#D9F99D] text-black px-6 py-3 rounded w-fit hover:bg-[#D9F99D]">
           {loading ? "Sending..." : "Send Message"}
         </button>
 
-        {success && <p className="text-green-400">{success}</p>}
+        {success && <p className="text-[#D9F99D]">{success}</p>}
       </form>
     </div>
   );
@@ -179,7 +179,7 @@ function InfoCard({ icon, title, text }) {
       whileHover={{ y: -6 }}
       className="bg-zinc-900 border border-zinc-800 rounded-xl p-6"
     >
-      <div className="text-lime-400 mb-3">{icon}</div>
+      <div className="text-[#D9F99D] mb-3">{icon}</div>
       <h3 className="font-semibold">{title}</h3>
       <p className="text-sm text-gray-400">{text}</p>
     </motion.div>
