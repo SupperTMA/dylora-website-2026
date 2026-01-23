@@ -12,7 +12,7 @@ const contactCards = [
   },
   {
     title: "Email Us",
-    text: "support@yourcompany.com",
+    text: "contact@dylora.in",
     icon: Mail,
     bgImage:
       "https://images.unsplash.com/photo-1525182008055-f88b95ff7980?w=1200&q=80",
