@@ -34,7 +34,8 @@ export default function ContactPage() {
     message: "",
   });
 
-  // cursor-follow glow (same concept as Services depth)
+  const [igMagnet, setIgMagnet] = useState(true);
+
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
@@ -47,10 +48,17 @@ export default function ContactPage() {
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
+  const handleCheckbox = (e) => setIgMagnet(e.target.checked);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Message Sent Successfully 🚀");
+    alert(
+      `Message Sent Successfully 🚀\nFree Strategy Call: ${
+        igMagnet ? "Yes" : "No"
+      }`
+    );
     setForm({ name: "", email: "", phone: "", message: "" });
+    setIgMagnet(true);
   };
 
   return (
@@ -66,12 +74,11 @@ export default function ContactPage() {
           <span className="text-[#D9F99D]">CONTACT </span>US
         </h1>
         <p className="text-gray-400 mt-6 max-w-xl mx-auto">
-          Talk to our experts and transform your ideas into secure,
-          scalable digital solutions.
+          Talk to our experts and transform your ideas into secure, scalable digital solutions.
         </p>
       </motion.section>
 
-      {/* CONTACT CARDS – EXACT SERVICES STYLE */}
+      {/* CONTACT CARDS */}
       <section className="relative z-10 px-8 md:px-20 pb-24">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {contactCards.map((item, index) => {
@@ -85,13 +92,9 @@ export default function ContactPage() {
                 transition={{ duration: 0.5, delay: index * 0.15 }}
                 whileHover={{ y: -10, scale: 1.02, rotateY: 5, rotateX: 5 }}
                 onMouseMove={onMove}
-                style={{
-                  transformStyle: "preserve-3d",
-                  perspective: "1000px",
-                }}
+                style={{ transformStyle: "preserve-3d", perspective: "1000px" }}
                 className="relative bg-[#1a1a1a] border border-gray-800 rounded-lg p-8 text-center hover:border-[#D9F99D] transition-all duration-300 group overflow-hidden cursor-pointer"
               >
-                {/* Background image */}
                 <div className="absolute inset-0">
                   <motion.div
                     className="absolute inset-0 bg-cover bg-center"
@@ -102,7 +105,6 @@ export default function ContactPage() {
                   <div className="absolute inset-0 bg-gradient-to-b from-[#1a1a1a]/95 via-[#1a1a1a]/90 to-[#1a1a1a]/95" />
                 </div>
 
-                {/* Cursor light */}
                 <motion.div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition"
                   style={{
@@ -116,7 +118,6 @@ export default function ContactPage() {
                   }}
                 />
 
-                {/* Icon */}
                 <motion.div
                   className="relative z-10 mb-5 inline-block"
                   whileHover={{ scale: 1.3, rotateY: 360 }}
@@ -131,16 +132,11 @@ export default function ContactPage() {
                   </div>
                 </motion.div>
 
-                <h3
-                  className="relative z-10 text-xl font-bold mb-3 group-hover:text-[#D9F99D]"
-                  style={{ transform: "translateZ(10px)" }}
-                >
+                <h3 className="relative z-10 text-xl font-bold mb-3 group-hover:text-[#D9F99D]" style={{ transform: "translateZ(10px)" }}>
                   {item.title}
                 </h3>
 
-                <p className="relative z-10 text-gray-400 whitespace-pre-line">
-                  {item.text}
-                </p>
+                <p className="relative z-10 text-gray-400 whitespace-pre-line">{item.text}</p>
 
                 <motion.div className="absolute inset-0 bg-gradient-to-t from-[#D9F99D]/10 to-transparent opacity-0 group-hover:opacity-100 transition rounded-lg" />
               </motion.div>
@@ -149,7 +145,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* TRUST STRIP – PROFESSIONAL ADDITION */}
+      {/* TRUST STRIP */}
       <section className="relative z-10 max-w-5xl mx-auto px-6 pb-20 grid md:grid-cols-2 gap-6">
         <TrustCard
           icon={ShieldCheck}
@@ -163,7 +159,7 @@ export default function ContactPage() {
         />
       </section>
 
-      {/* CONTACT FORM – SERVICE THEME */}
+      {/* CONTACT FORM */}
       <section className="relative z-10 max-w-5xl mx-auto px-6 pb-36">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -185,16 +181,59 @@ export default function ContactPage() {
             }}
           />
 
-          <div className="relative z-10">
-            <h2 className="text-4xl font-bold text-[#D9F99D] mb-8">
-              Send Us a Message
-            </h2>
+          <div className="relative z-10 space-y-8">
+            <h2 className="text-4xl font-bold text-[#D9F99D]">Send Us a Message</h2>
 
+            {/* IG MAGNET */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="relative border border-[#D9F99D]/40 rounded-xl p-6 bg-gradient-to-br from-[#1a1a1a] to-[#0f0f0f] overflow-hidden"
+            >
+              <motion.div
+                className="absolute inset-0"
+                style={{
+                  background: useMotionTemplate`
+                    radial-gradient(
+                      200px circle at ${mouseX}px ${mouseY}px,
+                      rgba(217,249,157,0.18),
+                      transparent 70%
+                    )
+                  `,
+                }}
+              />
+
+              <div className="relative z-10 flex gap-4 items-start">
+                <div className="w-12 h-12 flex items-center justify-center rounded-lg bg-[#D9F99D]/10 border border-[#D9F99D]/40">
+                  <span className="text-xl">🎁</span>
+                </div>
+
+                <div className="flex-1">
+                  <h4 className="text-lg font-bold text-[#D9F99D]">Free Strategy Call</h4>
+                  <p className="text-gray-400 text-sm mt-1">
+                    Submit this form & get a <b>FREE 30-minute consultation</b> with our experts + a basic project roadmap.
+                  </p>
+
+                  <label className="flex items-center gap-2 mt-3 text-sm cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={igMagnet}
+                      onChange={handleCheckbox}
+                      className="accent-[#D9F99D]"
+                    />
+                    Yes, I want the free consultation 🚀
+                  </label>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* FORM */}
             <form onSubmit={handleSubmit} className="grid gap-6">
               <div className="grid md:grid-cols-3 gap-5">
-                <Input name="name" placeholder="Your Name" onChange={handleChange} />
-                <Input name="email" placeholder="Email Address" onChange={handleChange} />
-                <Input name="phone" placeholder="Phone Number" onChange={handleChange} />
+                <Input name="name" placeholder="Your Name" onChange={handleChange} value={form.name}/>
+                <Input name="email" placeholder="Email Address" onChange={handleChange} value={form.email}/>
+                <Input name="phone" placeholder="Phone Number" onChange={handleChange} value={form.phone}/>
               </div>
 
               <textarea
@@ -202,6 +241,7 @@ export default function ContactPage() {
                 rows="6"
                 placeholder="Tell us about your project..."
                 onChange={handleChange}
+                value={form.message}
                 className="bg-black border border-gray-700 rounded-lg p-4"
               />
 
@@ -219,13 +259,9 @@ export default function ContactPage() {
   );
 }
 
-/* TRUST CARD */
 function TrustCard({ icon: Icon, title, text }) {
   return (
-    <motion.div
-      whileHover={{ y: -8 }}
-      className="flex gap-4 items-start bg-[#1a1a1a] border border-gray-800 rounded-lg p-6"
-    >
+    <motion.div whileHover={{ y: -8 }} className="flex gap-4 items-start bg-[#1a1a1a] border border-gray-800 rounded-lg p-6">
       <Icon size={32} className="text-[#D9F99D]" />
       <div>
         <h4 className="font-bold mb-1">{title}</h4>
@@ -235,13 +271,13 @@ function TrustCard({ icon: Icon, title, text }) {
   );
 }
 
-/* INPUT */
-function Input({ name, placeholder, onChange }) {
+function Input({ name, placeholder, onChange, value }) {
   return (
     <input
       name={name}
       placeholder={placeholder}
       onChange={onChange}
+      value={value}
       className="bg-black border border-gray-700 rounded-lg p-4 w-full"
     />
   );
