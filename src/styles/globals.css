@@ -9,7 +9,7 @@
   --text-main: #Eaeaea;
 }
 
-/* 1. FORCE CURSOR NONE EVERYWHERE */
+/* 1. FORCE SYSTEM CURSOR NONE EVERYWHERE */
 body, a, button, input, textarea, select, [role="button"] {
   cursor: none !important;
 }
@@ -18,27 +18,25 @@ body {
   background-color: var(--bg);
   color: var(--text-main);
   font-family: 'Space Grotesk', sans-serif;
-  overflow-x: hidden;
+  overflow-x: hidden; /* Critical for mobile */
+  width: 100%;
 }
 
 /* 2. CUSTOM SCROLLBAR (Green Theme) */
 ::-webkit-scrollbar {
-  width: 8px; /* Slightly thinner for elegance */
+  width: 8px; 
 }
-
 ::-webkit-scrollbar-track {
   background: var(--bg);
   border-left: 1px solid rgba(255, 255, 255, 0.05);
 }
-
 ::-webkit-scrollbar-thumb {
-  background: var(--accent); /* ALWAYS GREEN */
+  background: var(--accent); 
   border-radius: 4px;
-  border: 2px solid var(--bg); /* Creates a neat padding effect */
+  border: 2px solid var(--bg);
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: #bef264; /* Slightly lighter green on hover */
+  background: #bef264; 
 }
 
 .font-display { font-family: 'Syne', sans-serif; }
@@ -88,16 +86,15 @@ body.hovering .cursor-outline {
   mix-blend-mode: difference;
 }
 
-/* PRELOADER */
-.preloader {
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: #000;
-  z-index: 10000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--accent);
+/* --- MOBILE FIX: FORCE HIDE CURSOR ON TOUCH DEVICES --- */
+@media (max-width: 768px) {
+  .cursor-dot, .cursor-outline {
+    display: none !important;
+  }
+  /* Restore system cursor for mobile interactions */
+  body, a, button, input, textarea, select, [role="button"] {
+    cursor: auto !important;
+  }
 }
 
 /* ANIMATION UTILS */
@@ -108,50 +105,20 @@ body.hovering .cursor-outline {
   transform: scale(1.05);
   transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
-/* ... Keep existing tailwind directives and root variables ... */
 
-/* ADD TO YOUR GLOBALS.CSS */
-
-/* 1. Syncopate Font Import for the "System Check" text */
 @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&display=swap');
 
-/* 2. Film Grain Effect */
-.grain-overlay {
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  pointer-events: none;
-  z-index: 9000;
-  opacity: 0.05;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-}
-
-/* 3. Loader Font Override (Only used in loader) */
+/* Loading Font Override */
 .loading-word {
   font-family: 'Syncopate', sans-serif;
-  text-shadow: 0 0 20px rgba(217, 249, 157, 0.3); /* Green Glow */
+  text-shadow: 0 0 20px rgba(217, 249, 157, 0.3); 
 }
-
-/* 4. Loader Tile Logic */
 .loader-tile {
-  /* Using your app's background color */
   background-color: var(--bg); 
   border-color: rgba(255,255,255,0.03);
 }
-/* =========================================
-   PERFORMANCE OPTIMIZATIONS
-   Add class="hardware-accel" to any lagging element
-   ========================================= */
-.hardware-accel {
-  /* Tells the browser: "This is going to move, get the GPU ready" */
-  will-change: transform;
-  
-  /* Forces the element onto its own GPU layer (The "Hack") */
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  perspective: 1000px;
-}
 
-/* Apply directly to known laggy elements automatically */
+/* HARDWARE ACCEL */
 .cursor-dot, 
 .cursor-outline, 
 .magnetic-btn,
