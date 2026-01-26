@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
+// Import icons from same directory (pages/icons)
 import WebDevIcon from './icons/WebDev.png';
 import AppDevIcon from './icons/AppDev.png';
 import UIUXDesIcon from './icons/UIUXDes.png';
@@ -11,8 +12,6 @@ import ITSupIcon from './icons/ITSup.png';
 
 const ServicesPage = () => {
   const navigate = useNavigate();
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
   const [hoveredCard, setHoveredCard] = useState(null);
 
   const services = [
@@ -24,7 +23,7 @@ const ServicesPage = () => {
       bgImage: "https://images.unsplash.com/photo-1547658719-da2b51169166?w=800&q=80",
       tools: ["React", "Next.js", "Node.js", "MongoDB", "Tailwind CSS"],
       features: ["Responsive Design", "SEO Optimized", "Fast Loading", "Secure"],
-      deliveryTime: "2-4 weeks",
+      deliveryTime: "2-4 weeks"
     },
     {
       id: 2,
@@ -34,7 +33,7 @@ const ServicesPage = () => {
       bgImage: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80",
       tools: ["React Native", "Flutter", "Firebase", "Swift", "Kotlin"],
       features: ["Cross-platform", "Native Performance", "Push Notifications", "Offline Mode"],
-      deliveryTime: "3-6 weeks",
+      deliveryTime: "3-6 weeks"
     },
     {
       id: 3,
