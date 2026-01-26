@@ -1,38 +1,40 @@
 import { useEffect, useRef, useState } from "react";
-export default function useCountUp(target, duration = 2000) {
-  const ref = useRef(null);
+const useCountUp = (end, duration = 2000) => {
   const [count, setCount] = useState(0);
-  const startedRef = useRef(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef(null);
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !startedRef.current) {
-          startedRef.current = true;
-          let start = 0;
-          const startTime = performance.now();
-          const animate = (currentTime) => {
-            const progress = Math.min(
-              (currentTime - startTime) / duration,
-              1
-            );
-            const value = Math.floor(progress * target);
-            setCount(value);
-            if (progress < 1) {
-              requestAnimationFrame(animate);
-            } else {
-              setCount(target);
-            }
-          };
-          requestAnimationFrame(animate);
-          observer.disconnect();
+        if (entry.isIntersecting) {
+          setIsVisible(true);
         }
       },
-      { threshold: 0.6 }
+      { threshold: 0.5 }
     );
-    observer.observe(el);
+    if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
-  }, [target, duration]);
+  }, []);
+  useEffect(() => {
+    if (!isVisible) return;
+    let start = 0;
+    const endValue = parseInt(end);
+    if (isNaN(endValue)) return;
+    const totalFrames = 60;
+    const increment = endValue / totalFrames;
+    const intervalTime = duration / totalFrames;
+    const timer = setInterval(() => {
+      start += increment;
+      if (start >= endValue) {
+        setCount(endValue);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(start));
+      }
+    }, intervalTime);
+    return () => clearInterval(timer);
+  }, [isVisible, end, duration]);
+  // Yahan ref aur count return ho raha hai
   return { ref, count };
-}
+};
+export default useCountUp;

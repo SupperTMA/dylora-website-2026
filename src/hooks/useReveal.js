@@ -1,22 +1,17 @@
 import { useEffect, useRef, useState } from "react";
-const useReveal = (threshold = 0.3) => {
+const useReveal = (delay = 0) => {
   const ref = useRef(null);
   const [show, setShow] = useState(false);
   useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
-    const observer = new IntersectionObserver(
+    const obs = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setShow(true);
-          observer.unobserve(element);
-        }
+        if (entry.isIntersecting) setShow(true);
       },
-      { threshold }
+      { threshold: 0.2 }
     );
-    observer.observe(element);
-    return () => observer.disconnect();
-  }, [threshold]);
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, []);
   return { ref, show };
 };
 export default useReveal;
