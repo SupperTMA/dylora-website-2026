@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import MagneticButton from '../UI/MagneticButton';
 import { SOCIAL_LINKS, COMPANY_INFO } from '../../utils/constants';
 
-const Footer = () => {
+const Footer = ({title}) => {
   return (
     <footer className="bg-black pt-32 pb-12 border-t border-white/10 relative overflow-hidden">
       <div className="max-w-[1800px] mx-auto px-6 relative z-10">
@@ -11,8 +11,13 @@ const Footer = () => {
           <div>
             <span className="text-accent font-mono text-sm mb-4 block">READY TO START?</span>
             <h2 className="font-display text-7xl md:text-8xl font-bold tracking-tight mb-8">
-              Let's build <br /> the future.
-            </h2>
+  {title || (
+    <>
+      Let's build <br /> the future.
+    </>
+  )}
+</h2>
+
             <div className="flex gap-4">
               <Link to="/contact">
                 <MagneticButton className="bg-accent text-black px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform hover-trigger">
