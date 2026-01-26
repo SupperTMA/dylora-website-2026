@@ -25,7 +25,7 @@ const LimeInputCard = ({ label, placeholder, type = "text", name }) => {
         </div>
       </div>
     </div>
-  </div>
+  
   );
 };
 

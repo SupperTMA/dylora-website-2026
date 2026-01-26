@@ -305,7 +305,7 @@ const ServicesPage = () => {
                 style={{ transform: "translateZ(10px)" }}
               >
                 {service.title}
-              </h3>
+              </motion.h3>
 
               <p className="relative z-10 text-gray-400 text-xs sm:text-sm mb-4 sm:mb-6 whitespace-pre-line leading-relaxed">
                 {service.description}
