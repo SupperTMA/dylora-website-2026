@@ -295,7 +295,11 @@ const ServicesPage = () => {
                     boxShadow: "0 10px 30px rgba(217, 249, 157, 0)"
                   }}
                 >
-                  {service.icon}
+                 <img 
+  src={service.icon} 
+  alt={service.title} 
+  className="w-14 h-14 object-contain drop-shadow-md" 
+/>
                 </div>
               </motion.div>
 
