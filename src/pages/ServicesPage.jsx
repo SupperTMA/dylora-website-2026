@@ -1,52 +1,80 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+
+import WebDevIcon from './icons/WebDev.png';
+import AppDevIcon from './icons/AppDev.png';
+import UIUXDesIcon from './icons/UIUXDes.png';
+import CloudSolIcon from './icons/CloudSol.png';
+import CyberSeIcon from './icons/CyberSe.png';
+import ITSupIcon from './icons/ITSup.png';
 
 const ServicesPage = () => {
   const navigate = useNavigate();
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  const [hoveredCard, setHoveredCard] = useState(null);
 
   const services = [
     {
       id: 1,
       title: "Web Development",
       description: "Modern websites\nPerformance focused",
-      icon: "💻",
-      bgImage: "https://images.unsplash.com/photo-1547658719-da2b51169166?w=800&q=80"
+      icon: WebDevIcon,
+      bgImage: "https://images.unsplash.com/photo-1547658719-da2b51169166?w=800&q=80",
+      tools: ["React", "Next.js", "Node.js", "MongoDB", "Tailwind CSS"],
+      features: ["Responsive Design", "SEO Optimized", "Fast Loading", "Secure"],
+      deliveryTime: "2-4 weeks",
     },
     {
       id: 2,
       title: "App Development",
       description: "Android & iOS\nScalable architecture",
-      icon: "📱",
-      bgImage: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80"
+      icon: AppDevIcon,
+      bgImage: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80",
+      tools: ["React Native", "Flutter", "Firebase", "Swift", "Kotlin"],
+      features: ["Cross-platform", "Native Performance", "Push Notifications", "Offline Mode"],
+      deliveryTime: "3-6 weeks",
     },
     {
       id: 3,
       title: "UI/UX Design",
       description: "User-centered design\nHigh conversion layouts",
-      icon: "🎨",
-      bgImage: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80"
+      icon: UIUXDesIcon,
+      bgImage: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80",
+      tools: ["Figma", "Adobe XD", "Sketch", "Illustrator", "Protopie"],
+      features: ["User Research", "Wireframing", "Prototyping", "Usability Testing"],
+      deliveryTime: "1-3 weeks",
     },
     {
       id: 4,
       title: "Cloud Solutions",
       description: "AWS / Azure\nSecure deployment",
-      icon: "☁️",
-      bgImage: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80"
+      icon: CloudSolIcon,
+      bgImage: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80",
+      tools: ["AWS", "Azure", "Docker", "Kubernetes", "Terraform"],
+      features: ["Auto Scaling", "High Availability", "Cost Optimization", "24/7 Monitoring"],
+      deliveryTime: "1-2 weeks",
     },
     {
       id: 5,
       title: "Cyber Security",
       description: "Data protection\nSecure systems",
-      icon: "🛡️",
-      bgImage: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&q=80"
+      icon: CyberSeIcon,
+      bgImage: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&q=80",
+      tools: ["Firewall", "VPN", "SSL/TLS", "Penetration Testing", "SIEM"],
+      features: ["Threat Detection", "Data Encryption", "Compliance", "Risk Assessment"],
+      deliveryTime: "Ongoing",
     },
     {
       id: 6,
       title: "IT Support",
       description: "Maintenance\n24/7 monitoring",
-      icon: "⚙️",
-      bgImage: "https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=800&q=80"
+      icon: ITSupIcon,
+      bgImage: "https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=800&q=80",
+      tools: ["ServiceNow", "Jira", "Zendesk", "Slack", "Teams"],
+      features: ["24/7 Support", "Remote Assistance", "System Updates", "Backup & Recovery"],
+      deliveryTime: "24/7",
     }
   ];
 
@@ -91,106 +119,134 @@ const ServicesPage = () => {
 
   const clientStories = [
     {
-      icon: "📦",
+      icon: "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Busts%20in%20Silhouette.png",
       title: "Experienced Team",
       description: "Skilled IT professionals"
     },
     {
-      icon: "✅",
+      icon: "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Symbols/Check%20Mark%20Button.png",
       title: "Proven Results",
       description: "Always on schedule"
     },
     {
-      icon: "🚀",
+      icon: "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Rocket.png",
       title: "Cutting-Edge Technology",
       description: "Cost effective solutions"
     }
   ];
 
+  // Magnetic Button Component with STRONGER effect
+  const MagneticButton = ({ children, onClick, className }) => {
+    const x = useMotionValue(0);
+    const y = useMotionValue(0);
+    
+    const springConfig = { damping: 10, stiffness: 200 }; // More responsive
+    const xSpring = useSpring(x, springConfig);
+    const ySpring = useSpring(y, springConfig);
+
+    const handleMouseMove = (e) => {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      
+      const distanceX = e.clientX - centerX;
+      const distanceY = e.clientY - centerY;
+      
+      const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+      const maxDistance = 150; // Larger attraction radius
+      
+      if (distance < maxDistance) {
+        const strength = (maxDistance - distance) / maxDistance;
+        x.set(distanceX * strength * 0.6); // Stronger pull (was 0.3)
+        y.set(distanceY * strength * 0.6);
+      }
+    };
+
+    const handleMouseLeave = () => {
+      x.set(0);
+      y.set(0);
+    };
+
+    return (
+      <motion.button
+        style={{ x: xSpring, y: ySpring }}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        onClick={onClick}
+        className={className}
+        whileHover={{ scale: 1.08 }} // Slightly bigger on hover
+        whileTap={{ scale: 0.95 }}
+      >
+        {children}
+      </motion.button>
+    );
+  };
+
   return (
     <div className="relative min-h-screen bg-black text-white overflow-hidden">
-      {/* Animated Stars Background */}
-      <div className="absolute inset-0 bg-black">
-        {[...Array(150)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-white rounded-full"
-            style={{
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              opacity: [0.2, 1, 0.2],
-              scale: [1, 1.5, 1],
-            }}
-            transition={{
-              duration: Math.random() * 3 + 2,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-            }}
-          />
-        ))}
-      </div>
-
+      
       {/* Hero Section */}
       <motion.div 
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="relative z-10 pt-32 pb-20 px-8 text-center"
+        className="relative z-10 pt-24 sm:pt-32 pb-12 sm:pb-20 px-4 sm:px-8 text-center"
       >
         <motion.h1 
-          className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4"
+          className="font-display font-extrabold text-[clamp(2.5rem,7vw,9rem)] tracking-tighter uppercase text-white mix-blend-difference leading-[0.9] px-4"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <span className="text-[#C5FF55]">OUR </span>
+          <span className="text-[#8DB876]">OUR </span>
           <span className="text-white">SERVICES</span>
           <br />
-          <span className="text-[#C5FF55]">& </span>
+          <span className="text-[#8DB876]">& </span>
           <span className="text-white">SOLUTIONS</span>
         </motion.h1>
         
         <motion.p 
-          className="text-gray-400 text-lg mb-8 max-w-2xl mx-auto"
+          className="text-base sm:text-lg md:text-xl text-gray-400 mb-6 sm:mb-8 max-w-2xl mx-auto px-4"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          Comprehensive IT services designed to build, scale,
-          <br />
-          and secure your digital presence.
+          Comprehensive IT services designed to build, scale, and secure your digital presence.
         </motion.p>
 
-        <motion.button
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => navigate('/contact')}
-          className="px-8 py-3 bg-transparent border-2 border-[#C5FF55] text-[#C5FF55] font-semibold rounded-lg hover:bg-[#C5FF55] hover:text-black transition-all duration-300 cursor-pointer"
         >
-          Get Free Consultation
-        </motion.button>
+          <MagneticButton
+            onClick={() => navigate('/contact')}
+            className="px-6 sm:px-8 py-3 bg-[#8DB876] text-black font-semibold rounded-lg hover:bg-[#7ca665] transition-all duration-300 cursor-pointer text-sm sm:text-base shadow-lg shadow-[#8DB876]/30"
+          >
+            Get Free Consultation
+          </MagneticButton>
+        </motion.div>
       </motion.div>
 
       {/* Services Section */}
-      <div className="relative z-10 px-8 md:px-20 pb-20">
-        <motion.h2 
+      <div className="relative z-10 px-4 sm:px-8 md:px-20 pb-12 sm:pb-20">
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-3xl md:text-4xl font-bold text-center mb-16"
+          className="text-center mb-12 sm:mb-16"
         >
-          <span className="border-b-2 border-gray-700 pb-2">
-            Comprehensive IT Solutions
-          </span>
-        </motion.h2>
+          <div className="flex items-center justify-center gap-4 sm:gap-6 mb-4">
+            <div className="h-px bg-gradient-to-r from-transparent via-[#8DB876] to-transparent w-12 sm:w-24 md:w-32 lg:w-48"></div>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold whitespace-nowrap">
+              Comprehensive IT Solutions
+            </h2>
+            <div className="h-px bg-gradient-to-r from-transparent via-[#8DB876] to-transparent w-12 sm:w-24 md:w-32 lg:w-48"></div>
+          </div>
+        </motion.div>
 
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {services.map((service, index) => (
             <motion.div
               key={service.id}
@@ -201,16 +257,12 @@ const ServicesPage = () => {
               whileHover={{ 
                 y: -10, 
                 scale: 1.02,
-                rotateY: 5,
-                rotateX: 5
               }}
-              style={{ 
-                transformStyle: "preserve-3d",
-                perspective: "1000px"
-              }}
-              className="relative bg-[#1a1a1a] border border-gray-800 rounded-lg p-8 text-center hover:border-[#C5FF55] transition-all duration-300 group cursor-pointer overflow-hidden"
+              onMouseEnter={() => setHoveredCard(service.id)}
+              onMouseLeave={() => setHoveredCard(null)}
+              className="relative bg-[#1a1a1a] border border-gray-800 rounded-lg p-6 sm:p-8 text-center hover:border-[#8DB876] transition-all duration-300 group cursor-pointer overflow-visible"
+              style={{ zIndex: hoveredCard === service.id ? 110 : 1 }}
             >
-              {/* Background Image with Overlay */}
               <div className="absolute inset-0 overflow-hidden rounded-lg">
                 <motion.div
                   className="absolute inset-0 bg-cover bg-center"
@@ -221,48 +273,71 @@ const ServicesPage = () => {
                 <div className="absolute inset-0 bg-gradient-to-b from-[#1a1a1a]/95 via-[#1a1a1a]/90 to-[#1a1a1a]/95 group-hover:from-[#1a1a1a]/98 group-hover:via-[#1a1a1a]/95 group-hover:to-[#1a1a1a]/98 transition-all duration-500" />
               </div>
 
-              {/* Icon with 3D effect */}
+              {/* 3D Icon with Curves */}
               <motion.div 
-                className="relative z-10 text-6xl mb-4 inline-block"
+                className="relative z-10 mb-6 inline-block"
                 whileHover={{ 
-                  scale: 1.3, 
-                  rotateY: 360,
-                  rotateZ: [0, -10, 10, -10, 0]
+                  scale: 1.12,
+                  y: -8,
+                  rotateY: 8,
                 }}
-                transition={{ 
-                  rotateY: { duration: 0.8 },
-                  rotateZ: { duration: 0.5 },
-                  scale: { duration: 0.3 }
-                }}
-                style={{ transformStyle: "preserve-3d" }}
+                transition={{ duration: 0.4 }}
+                style={{ perspective: "1000px" }}
               >
-                <div className="w-20 h-20 mx-auto bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl flex items-center justify-center text-4xl border border-gray-700 group-hover:border-[#C5FF55] group-hover:shadow-lg group-hover:shadow-[#C5FF55]/30 transition-all duration-300"
-                  style={{ 
-                    transform: "translateZ(20px)",
-                    boxShadow: "0 10px 30px rgba(197, 255, 85, 0)"
-                  }}
-                >
-                  {service.icon}
+                <div className="relative w-28 h-28 sm:w-32 sm:h-32 mx-auto">
+                  {/* Bottom shadow for 3D depth */}
+                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-24 h-4 bg-[#8DB876]/20 blur-lg rounded-full" />
+                  
+                  {/* Icon container with curved edges */}
+                  <div className="relative w-full h-full rounded-3xl overflow-hidden bg-gradient-to-br from-black/20 to-black/40 p-3 backdrop-blur-sm">
+                    {/* Top light reflection for 3D */}
+                    <div className="absolute top-0 left-0 right-0 h-1/3 bg-gradient-to-b from-white/10 to-transparent rounded-t-3xl pointer-events-none z-10" />
+                    
+                    {/* Icon with glow */}
+                    <img 
+                      src={service.icon} 
+                      alt={service.title}
+                      className="relative w-full h-full object-contain drop-shadow-[0_8px_20px_rgba(141,184,118,0.4)] group-hover:drop-shadow-[0_12px_30px_rgba(141,184,118,0.6)] transition-all duration-500"
+                      style={{
+                        filter: "brightness(1.1) contrast(1.05)",
+                        transform: "translateZ(10px)"
+                      }}
+                    />
+                    
+                    {/* Bottom shadow overlay for depth */}
+                    <div className="absolute bottom-0 left-0 right-0 h-1/4 bg-gradient-to-t from-black/30 to-transparent rounded-b-3xl pointer-events-none" />
+                    
+                    {/* Subtle border glow */}
+                    <div className="absolute inset-0 rounded-3xl border border-[#8DB876]/20 group-hover:border-[#8DB876]/40 transition-all duration-500" />
+                  </div>
+                  
+                  {/* Single sparkle */}
+                  <motion.div
+                    className="absolute top-2 right-2 w-2 h-2 bg-[#8DB876] rounded-full"
+                    animate={{
+                      scale: [1, 1.4, 1],
+                      opacity: [0.5, 0.9, 0.5]
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  />
                 </div>
               </motion.div>
 
-              {/* Title with 3D effect */}
-              <motion.h3 
-                className="relative z-10 text-xl font-bold mb-3 group-hover:text-[#C5FF55] transition-colors duration-300"
-                style={{ transform: "translateZ(10px)" }}
-              >
+              <h3 className="relative z-10 text-lg sm:text-xl font-bold mb-3 group-hover:text-[#8DB876] transition-colors duration-300">
                 {service.title}
-              </motion.h3>
+              </h3>
 
-              {/* Description */}
-              <p className="relative z-10 text-gray-400 text-sm mb-6 whitespace-pre-line leading-relaxed">
+              <p className="relative z-10 text-gray-400 text-xs sm:text-sm mb-4 sm:mb-6 whitespace-pre-line leading-relaxed">
                 {service.description}
               </p>
 
-              {/* Learn More with arrow animation */}
               <motion.button
                 onClick={() => navigate('/contact')}
-                className="relative z-10 text-[#C5FF55] text-sm font-semibold inline-flex items-center gap-2 group/link cursor-pointer bg-transparent border-none"
+                className="relative z-10 text-[#8DB876] text-xs sm:text-sm font-semibold inline-flex items-center gap-2 cursor-pointer bg-transparent border-none"
                 whileHover={{ x: 5 }}
               >
                 Learn More
@@ -279,92 +354,123 @@ const ServicesPage = () => {
                 </motion.span>
               </motion.button>
 
-              {/* Animated Glow Effect */}
               <motion.div 
-                className="absolute inset-0 bg-gradient-to-t from-[#C5FF55]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg pointer-events-none"
-                initial={{ opacity: 0 }}
-                whileHover={{ opacity: 1 }}
+                className="absolute inset-0 bg-gradient-to-t from-[#8DB876]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg pointer-events-none"
               />
 
-              {/* 3D Corner decoration */}
-              <motion.div 
-                className="absolute top-0 right-0 w-20 h-20 bg-[#C5FF55]/10 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                whileHover={{ scale: 1.2 }}
-              />
+              {/* Popup Card on Hover - Above the card */}
+              {hoveredCard === service.id && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9, y: -20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.9, y: -20 }}
+                  transition={{ duration: 0.3, type: "spring", stiffness: 300 }}
+                  className="absolute bottom-full left-1/2 -translate-x-1/2 mb-4 w-80 bg-gradient-to-br from-[#1a1a1a] via-[#0a0a0a] to-black border-2 border-[#8DB876] rounded-2xl p-6 shadow-2xl shadow-[#8DB876]/30 z-[100]"
+                  style={{
+                    backdropFilter: "blur(10px)",
+                  }}
+                >
+                  {/* Arrow pointing down */}
+                  <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-[#8DB876] rotate-45" />
+                  
+                  {/* Content */}
+                  <div className="relative z-10">
+                    {/* Title with icon */}
+                    <div className="flex items-center gap-3 mb-4 pb-4 border-b border-[#8DB876]/30">
+                      <div className="w-12 h-12 rounded-xl bg-[#8DB876]/10 flex items-center justify-center">
+                        <img src={service.icon} alt="" className="w-8 h-8 object-contain" />
+                      </div>
+                      <h4 className="text-lg font-bold text-[#8DB876]">{service.title}</h4>
+                    </div>
 
-              {/* Animated particles */}
-              <motion.div
-                className="absolute top-2 right-2 w-2 h-2 bg-[#C5FF55] rounded-full opacity-0 group-hover:opacity-100"
-                animate={{
-                  y: [0, -20, 0],
-                  opacity: [0, 1, 0]
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  delay: index * 0.2
-                }}
-              />
-              <motion.div
-                className="absolute bottom-2 left-2 w-2 h-2 bg-[#C5FF55] rounded-full opacity-0 group-hover:opacity-100"
-                animate={{
-                  y: [0, 20, 0],
-                  opacity: [0, 1, 0]
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  delay: index * 0.2 + 0.5
-                }}
-              />
+                    {/* Tools/Technologies */}
+                    <div className="mb-4">
+                      <p className="text-xs font-semibold text-gray-400 mb-2 uppercase tracking-wider">Technologies</p>
+                      <div className="flex flex-wrap gap-2">
+                        {service.tools.map((tool, i) => (
+                          <span
+                            key={i}
+                            className="px-3 py-1 text-xs bg-[#8DB876]/20 text-[#8DB876] rounded-full border border-[#8DB876]/40 font-medium"
+                          >
+                            {tool}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Key Features */}
+                    <div className="mb-4">
+                      <p className="text-xs font-semibold text-gray-400 mb-2 uppercase tracking-wider">Key Features</p>
+                      <ul className="space-y-2">
+                        {service.features.map((feature, i) => (
+                          <li key={i} className="flex items-center gap-2 text-sm text-gray-300">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#8DB876]" />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Delivery Time */}
+                    <div className="pt-3 border-t border-[#8DB876]/30 flex items-center justify-between">
+                      <span className="text-xs text-gray-400">Delivery Time</span>
+                      <span className="text-sm font-bold text-[#8DB876]">{service.deliveryTime}</span>
+                    </div>
+                  </div>
+
+                  {/* Glow effect */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#8DB876]/5 to-transparent rounded-2xl pointer-events-none" />
+                </motion.div>
+              )}
             </motion.div>
           ))}
         </div>
       </div>
 
       {/* Projects Section */}
-      <div className="relative z-10 px-8 md:px-20 pb-20 overflow-hidden">
-        <motion.h2 
+      <div className="relative z-10 px-4 sm:px-8 md:px-20 pb-12 sm:pb-20 overflow-hidden">
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-3xl md:text-4xl font-bold text-center mb-16"
+          className="text-center mb-12 sm:mb-16"
         >
-          <span className="border-b-2 border-gray-700 pb-2">
-            Projects Delivered Under Our Services
-          </span>
-        </motion.h2>
+          <div className="flex items-center justify-center gap-4 sm:gap-6 mb-4">
+            <div className="h-px bg-gradient-to-r from-transparent via-[#8DB876] to-transparent w-12 sm:w-24 md:w-32 lg:w-48"></div>
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-center px-2">
+              Projects Delivered Under Our Services
+            </h2>
+            <div className="h-px bg-gradient-to-r from-transparent via-[#8DB876] to-transparent w-12 sm:w-24 md:w-32 lg:w-48"></div>
+          </div>
+        </motion.div>
 
-        {/* Horizontal Scrolling Container */}
         <div className="relative max-w-7xl mx-auto">
           <div className="overflow-hidden">
             <motion.div 
-              className="flex gap-6"
+              className="flex gap-4 sm:gap-6"
               animate={{
-                x: [0, -2000]
+                x: [0, -2400]
               }}
               transition={{
                 x: {
-                  duration: 30,
+                  duration: 40,
                   repeat: Infinity,
                   ease: "linear"
                 }
               }}
             >
-              {/* Double the projects array for seamless loop */}
               {[...projects, ...projects].map((project, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 50, scale: 0.9 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: (index % projects.length) * 0.1 }}
                   whileHover={{ y: -15, scale: 1.03 }}
-                  className="relative bg-[#1a1a1a] border border-gray-800 rounded-lg overflow-hidden hover:border-[#C5FF55] transition-all duration-300 group cursor-pointer flex-shrink-0 w-[350px]"
+                  className="relative bg-[#1a1a1a] border border-gray-800 rounded-lg overflow-hidden hover:border-[#8DB876] transition-all duration-300 group cursor-pointer flex-shrink-0 w-[280px] sm:w-[350px]"
                 >
-                  {/* Image with zoom effect */}
-                  <div className="relative h-48 overflow-hidden">
+                  <div className="relative h-40 sm:h-48 overflow-hidden">
                     <motion.img
                       src={project.image}
                       alt={project.title}
@@ -373,33 +479,24 @@ const ServicesPage = () => {
                       transition={{ duration: 0.6 }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] via-[#1a1a1a]/50 to-transparent" />
-                    
-                    {/* Overlay glow effect */}
                     <motion.div 
-                      className="absolute inset-0 bg-[#C5FF55]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      initial={{ opacity: 0 }}
-                      whileHover={{ opacity: 1 }}
+                      className="absolute inset-0 bg-[#8DB876]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     />
                   </div>
 
-                  {/* Content */}
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold mb-2 group-hover:text-[#C5FF55] transition-colors duration-300">
+                  <div className="p-4 sm:p-6">
+                    <h3 className="text-lg sm:text-xl font-bold mb-2 group-hover:text-[#8DB876] transition-colors duration-300">
                       {project.title}
                     </h3>
-                    <p className="text-gray-400 text-sm mb-4 whitespace-pre-line">
+                    <p className="text-gray-400 text-xs sm:text-sm mb-4 whitespace-pre-line">
                       {project.description}
                     </p>
 
-                    {/* Rating with stagger animation */}
                     <div className="flex gap-1">
                       {[...Array(project.rating)].map((_, i) => (
                         <motion.span 
                           key={i}
-                          className="text-[#C5FF55] text-lg"
-                          initial={{ opacity: 0, scale: 0 }}
-                          whileInView={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: (index % projects.length) * 0.1 + i * 0.1 }}
+                          className="text-[#8DB876] text-base sm:text-lg"
                           whileHover={{ scale: 1.3, rotate: 15 }}
                         >
                           ⭐
@@ -408,36 +505,38 @@ const ServicesPage = () => {
                     </div>
                   </div>
 
-                  {/* Bottom glow line */}
                   <motion.div 
-                    className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#C5FF55] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#8DB876] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   />
                 </motion.div>
               ))}
             </motion.div>
           </div>
 
-          {/* Gradient Fade Edges */}
-          <div className="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-black to-transparent pointer-events-none z-10" />
-          <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-black to-transparent pointer-events-none z-10" />
+          <div className="absolute top-0 left-0 w-16 sm:w-32 h-full bg-gradient-to-r from-black to-transparent pointer-events-none z-10" />
+          <div className="absolute top-0 right-0 w-16 sm:w-32 h-full bg-gradient-to-l from-black to-transparent pointer-events-none z-10" />
         </div>
       </div>
 
       {/* Client Stories Section */}
-      <div className="relative z-10 px-8 md:px-20 pb-20">
-        <motion.h2 
+      <div className="relative z-10 px-4 sm:px-8 md:px-20 pb-12 sm:pb-20">
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-3xl md:text-4xl font-bold text-center mb-16"
+          className="text-center mb-12 sm:mb-16"
         >
-          <span className="border-b-2 border-gray-700 pb-2">
-            Client Stories?
-          </span>
-        </motion.h2>
+          <div className="flex items-center justify-center gap-4 sm:gap-6 mb-4">
+            <div className="h-px bg-gradient-to-r from-transparent via-[#8DB876] to-transparent w-12 sm:w-24 md:w-32 lg:w-48"></div>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold whitespace-nowrap">
+              Client Stories?
+            </h2>
+            <div className="h-px bg-gradient-to-r from-transparent via-[#8DB876] to-transparent w-12 sm:w-24 md:w-32 lg:w-48"></div>
+          </div>
+        </motion.div>
 
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
           {clientStories.map((story, index) => (
             <motion.div
               key={index}
@@ -449,20 +548,27 @@ const ServicesPage = () => {
               className="flex items-start gap-4 cursor-pointer"
             >
               <motion.div 
-                className="text-4xl flex-shrink-0"
+                className="flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16"
                 whileHover={{ 
-                  scale: 1.3,
-                  rotate: [0, -15, 15, -15, 0]
+                  scale: 1.2,
+                  rotate: 5
                 }}
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.3 }}
               >
-                {story.icon}
+                <img 
+                  src={story.icon} 
+                  alt={story.title}
+                  className="w-full h-full object-contain drop-shadow-2xl"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                  }}
+                />
               </motion.div>
               <div>
-                <h3 className="text-lg font-bold mb-2">
+                <h3 className="text-base sm:text-lg font-bold mb-2">
                   {story.title}
                 </h3>
-                <p className="text-gray-400 text-sm">
+                <p className="text-gray-400 text-xs sm:text-sm">
                   {story.description}
                 </p>
               </div>
@@ -477,10 +583,10 @@ const ServicesPage = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className="relative z-10 px-8 pb-32 text-center"
+        className="relative z-10 px-4 sm:px-8 pb-20 sm:pb-32 text-center"
       >
         <motion.h2 
-          className="text-3xl md:text-4xl font-bold mb-4"
+          className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 px-4"
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
@@ -489,7 +595,7 @@ const ServicesPage = () => {
           Let's build powerful digital solutions together
         </motion.h2>
         <motion.p 
-          className="text-gray-400 mb-8"
+          className="text-gray-400 mb-6 sm:mb-8 text-sm sm:text-base"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -497,18 +603,19 @@ const ServicesPage = () => {
         >
           Transform your business with our expertise
         </motion.p>
-        <motion.button
+        <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          whileHover={{ scale: 1.08 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => navigate('/contact')}
-          className="px-8 py-3 bg-[#C5FF55] text-black font-bold rounded-lg hover:bg-[#b8f044] transition-all duration-300 cursor-pointer shadow-lg shadow-[#C5FF55]/20 hover:shadow-[#C5FF55]/40"
         >
-          Get Started Today
-        </motion.button>
+          <MagneticButton
+            onClick={() => navigate('/contact')}
+            className="px-6 sm:px-8 py-3 bg-[#8DB876] text-black font-bold rounded-lg hover:bg-[#7ca665] transition-all duration-300 cursor-pointer shadow-lg shadow-[#8DB876]/20 hover:shadow-[#8DB876]/40 text-sm sm:text-base"
+          >
+            Get Started Today
+          </MagneticButton>
+        </motion.div>
       </motion.div>
 
       {/* Floating Glow Effects */}
@@ -523,7 +630,7 @@ const ServicesPage = () => {
           repeat: Infinity,
           ease: "easeInOut"
         }}
-        className="absolute top-1/4 right-20 w-64 h-64 bg-[#C5FF55]/10 rounded-full blur-3xl pointer-events-none"
+        className="absolute top-1/4 right-10 sm:right-20 w-32 h-32 sm:w-64 sm:h-64 bg-[#8DB876]/10 rounded-full blur-3xl pointer-events-none"
       />
       
       <motion.div
@@ -538,21 +645,7 @@ const ServicesPage = () => {
           ease: "easeInOut",
           delay: 1
         }}
-        className="absolute bottom-1/3 left-20 w-64 h-64 bg-[#C5FF55]/10 rounded-full blur-3xl pointer-events-none"
-      />
-
-      <motion.div
-        animate={{ 
-          x: [-20, 20, -20],
-          opacity: [0.1, 0.25, 0.1]
-        }}
-        transition={{ 
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 2
-        }}
-        className="absolute top-1/2 left-1/2 w-96 h-96 bg-[#C5FF55]/5 rounded-full blur-3xl pointer-events-none"
+        className="absolute bottom-1/3 left-10 sm:left-20 w-32 h-32 sm:w-64 sm:h-64 bg-[#8DB876]/10 rounded-full blur-3xl pointer-events-none"
       />
     </div>
   );
