@@ -126,7 +126,7 @@ const WhyChoose = () => {
             const offset = index - config.centerIndex;
             
             gsap.to(card, {
-              duration: 1.2,
+              duration: 1.75,
               ease: "elastic.out(1, 0.6)",
               delay: index * 0.05,
               x: offset * config.spacingX,

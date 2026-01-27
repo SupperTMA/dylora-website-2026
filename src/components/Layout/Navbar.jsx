@@ -75,7 +75,7 @@ const Navbar = () => {
           </div>
 
           {/* DESKTOP CTA BUTTON */}
-          <Link to="/contact" className="hidden md:block">
+          <Link to="/contact" state={{ formType: 'quote' }} className="hidden md:block">
             <MagneticButton className="bg-white text-black px-8 py-3 rounded-full font-bold text-sm hover:bg-accent transition-colors border border-transparent hover-trigger">
               <span className="inline-block pointer-events-none">Get Started</span>
             </MagneticButton>
@@ -111,7 +111,7 @@ const Navbar = () => {
               {link.name}
             </Link>
           ))}
-          <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)} className="mt-8">
+          <Link to="/contact" state={{ formType: 'quote' }} onClick={() => setIsMobileMenuOpen(false)} className="mt-8">
             <button className="bg-accent text-black px-10 py-4 rounded-full font-bold uppercase tracking-widest">
               Get Started
             </button>
