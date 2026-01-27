@@ -1,4 +1,3 @@
-// src/components/Home/Services.jsx
 import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -69,14 +68,10 @@ const Services = () => {
   return (
     <section className="py-20 md:py-32 px-5 md:px-6 max-w-[1800px] mx-auto">
       
-      {/* FIX: FLEX COL + GAP-16
-         This forces a 4rem (64px) gap between the title section and the list on mobile.
-         On Desktop (md), it switches to a grid with no gap (gap-0) because grid handles layout.
-      */}
+      
       <div className="flex flex-col gap-16 md:grid md:grid-cols-12 md:gap-0">
         
-        {/* LEFT TITLE */}
-        {/* Removed sticky for mobile completely to avoid scroll overlap issues */}
+        
         <div className="md:col-span-4 relative md:sticky md:top-32 h-fit z-10">
           <span className="font-mono text-accent text-xs uppercase mb-4 block">(02) — Services</span>
           <h2 className="font-display text-4xl md:text-5xl font-bold leading-tight mb-6">

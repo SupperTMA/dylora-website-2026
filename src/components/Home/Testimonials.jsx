@@ -52,7 +52,7 @@ const Testimonials = () => {
           {[...EXTENDED_TESTIMONIALS, ...EXTENDED_TESTIMONIALS].map((testimonial, index) => (
             
   
-            // FIX: Adjusted padding for mobile p-6 md:p-10
+         
             <div 
               key={index} 
               className="w-[85vw] md:w-[600px] glass-panel p-6 md:p-10 hover:bg-white/5 transition-all group hover-trigger relative overflow-hidden testimonial-card flex-shrink-0"

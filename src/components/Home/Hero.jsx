@@ -8,7 +8,6 @@ const Hero = ({ startAnimation, isFirstLoad }) => {
    
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      // 1. Set text significantly lower to ensure it's fully hidden initially
       gsap.set(".reveal-text span", { y: "120%" });
       gsap.set(".hero-footer", { opacity: 0, y: 20 });
       gsap.set(".reveal-meta", { opacity: 0 });
@@ -29,10 +28,10 @@ const Hero = ({ startAnimation, isFirstLoad }) => {
           ease: "power2.out"
         }, "<") 
         .to(".reveal-text span", {
-          y: "0%", // Brings it exactly to baseline
+          y: "0%", 
           duration: textDuration,
           stagger: 0.1,
-          ease: "power4.out" // Strong snap at the end
+          ease: "power4.out" 
         }, isFirstLoad ? "-=0.8" : "-=0.4")
         .to(".hero-footer", {
           opacity: 1,
@@ -67,17 +66,10 @@ const Hero = ({ startAnimation, isFirstLoad }) => {
 
         {/* Big Headline */}
         <div>
-          {/* FIX DETAILS:
-              1. leading-tight (approx 1.25) is safer than leading-[0.9] for preventing clips.
-              2. On desktop (md), we tighten it back to leading-[0.9] BUT...
-              3. ...we add 'pb-2' (padding bottom) to the reveal-text divs below.
-          */}
+          
           <h1 className="font-display font-extrabold text-[clamp(2.5rem,9vw,10rem)] tracking-tighter uppercase text-white mix-blend-difference leading-tight md:leading-[0.95] py-4">
             
-            {/* CRITICAL FIX: 
-               The 'pb-3' adds invisible space at the bottom of the mask so 'g' or 'm' legs aren't cut.
-               The '-mb-3' pulls the next line up so the visual spacing remains tight.
-            */}
+            
             <div className="reveal-text overflow-hidden pb-3 -mb-3">
               <span className="block translate-y-full">Transform</span>
             </div>

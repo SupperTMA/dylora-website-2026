@@ -13,8 +13,6 @@ import WhyChoose from '../components/Home/WhyChoose';
 
 
 const HomePage = () => {
-  // Remove the stray <Navbar /> line here if it exists in your actual file, 
-  // it doesn't do anything inside the function body like that.
 
   const [isFirstVisit] = useState(() => {
     const visited = sessionStorage.getItem("hasVisited");
@@ -34,7 +32,7 @@ const HomePage = () => {
     setShowPreloader(false);
     setCanStartHero(true);
 
-    // 3. TRIGGER NAVBAR REVEAL (This is the fix)
+    // 3. TRIGGER NAVBAR REVEAL 
     window.dispatchEvent(new Event('reveal-navbar'));
   };
 
