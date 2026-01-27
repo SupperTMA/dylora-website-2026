@@ -489,7 +489,7 @@ const ContactPage = () => {
              <img 
                src="https://cdn.pixabay.com/photo/2018/03/22/02/37/email-3249062_1280.png"
                alt="Email Background"
-               className="absolute inset-0 w-full h-full object-cover opacity-50 mix-blend-overlay group-hover:scale-105 transition-transform duration-700"
+               className="absolute inset-0 w-full h-full object-cover opacity-100 mix-blend-overlay group-hover:scale-105 transition-transform duration-700"
              />
 
              <div className="absolute top-4 right-4 text-[#D9F99D] z-10">
@@ -509,7 +509,7 @@ const ContactPage = () => {
              <img 
                src="https://img.freepik.com/free-photo/digital-painting-old-clock_23-2151570635.jpg?semt=ais_hybrid&w=740&q=80"
                alt="Clock"
-               className="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-overlay group-hover:scale-105 transition-transform duration-700"
+               className="absolute inset-0 w-full h-full object-cover opacity-100 mix-blend-overlay group-hover:scale-105 transition-transform duration-700"
              />
 
              <div className="absolute top-4 right-4 text-white/10 transform -rotate-12 group-hover:rotate-0 transition-transform duration-500 z-10">
