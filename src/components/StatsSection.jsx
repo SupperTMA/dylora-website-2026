@@ -15,7 +15,7 @@ function CountUp({ value, suffix, start }) {
     if (!start) return;
 
     let current = 0;
-    const duration = 1500; // Increased duration for smoother feel
+    const duration = 1500; 
     const step = Math.max(Math.floor(duration / value), 20);
 
     const timer = setInterval(() => {
@@ -34,7 +34,7 @@ function CountUp({ value, suffix, start }) {
   return (
     <span>
       {count}
-      <span className="text-white/40 ml-1">{suffix}</span>
+      <span className="text-white/40 ml-0.5 sm:ml-1">{suffix}</span>
     </span>
   );
 }
@@ -44,9 +44,9 @@ export default function StatsSection() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section ref={ref} className="mt-36 relative py-20 overflow-hidden">
+    <section ref={ref} className="mt-24 md:mt-36 relative py-12 md:py-20 overflow-hidden">
       
-      {/* BACKGROUND DECOR - Floating Orbs */}
+      {/* BACKGROUND DECOR */}
       <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-[var(--accent)]/5 blur-[100px] rounded-full -z-10" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[var(--accent)]/10 blur-[120px] rounded-full -z-10" />
 
@@ -56,7 +56,7 @@ export default function StatsSection() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         viewport={{ once: true }}
-        className="text-center mb-24 relative"
+        className="text-center mb-16 md:mb-24 px-4 relative"
       >
         <div className="flex items-center justify-center gap-3 mb-4">
             <div className="w-8 h-[1px] bg-[var(--accent)]/50" />
@@ -66,17 +66,16 @@ export default function StatsSection() {
             <div className="w-8 h-[1px] bg-[var(--accent)]/50" />
         </div>
 
-        <h2 className="text-5xl md:text-6xl font-black text-white tracking-tighter uppercase italic">
+        <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter uppercase italic">
           Numbers That <span className="text-[var(--accent)] text-outline">Speak</span>
         </h2>
 
-        <p className="text-gray-500 mt-6 max-w-2xl mx-auto text-lg font-light">
-          A snapshot of the trust we’ve earned and the measurable results
-          delivered through engineering precision and design excellence.
+        <p className="text-gray-500 mt-4 md:mt-6 max-w-2xl mx-auto text-sm md:text-lg font-light px-6">
+          A snapshot of the trust we’ve earned and results delivered.
         </p>
       </motion.div>
 
-      {/* STATS GRID */}
+      {/* STATS GRID - 2 columns on mobile */}
       <motion.div
         variants={{
           hidden: {},
@@ -85,7 +84,7 @@ export default function StatsSection() {
         initial="hidden"
         whileInView="show"
         viewport={{ once: true }}
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-4"
+        className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 px-4 max-w-7xl mx-auto"
       >
         {stats.map((item, index) => (
           <motion.div
@@ -94,49 +93,40 @@ export default function StatsSection() {
               hidden: { opacity: 0, scale: 0.9 },
               show: { opacity: 1, scale: 1 },
             }}
-            whileHover={{ y: -10, rotateX: 5, rotateY: 5 }}
+            whileHover={{ y: -8 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            className="group relative rounded-3xl p-10 bg-gradient-to-b from-white/[0.05] to-transparent border border-white/10 hover:border-[var(--accent)]/50 transition-colors duration-500 overflow-hidden"
+            className="group relative rounded-2xl md:rounded-3xl p-5 md:p-10 bg-white/[0.02] border border-white/10 hover:border-[var(--accent)]/30 transition-all duration-500 overflow-hidden"
           >
-            {/* CORNER ACCENT - Professional touch */}
-            <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-[var(--accent)]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            
-            {/* Animated Glow Trace */}
-            <motion.div 
-                initial={{ left: "-100%" }}
-                whileHover={{ left: "100%" }}
-                transition={{ duration: 0.8 }}
-                className="absolute top-0 h-[1px] w-full bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent"
-            />
+            {/* BORDER GLOW TRACE - Desktop Only Hover */}
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent" />
+                <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent" />
+            </div>
 
-            {/* Backdrop Blur Layer */}
             <div className="absolute inset-0 bg-black/40 backdrop-blur-md -z-10" />
 
             {/* NUMBER */}
-            <motion.div 
-                className="relative z-10"
-                whileHover={{ scale: 1.05 }}
-            >
-              <h3 className="text-6xl font-black text-white tracking-tight flex justify-center items-baseline">
+            <div className="relative z-10">
+              <h3 className="text-3xl md:text-6xl font-black text-white tracking-tight flex justify-center items-baseline">
                 <CountUp
                   value={item.value}
                   suffix={item.suffix}
                   start={isInView}
                 />
               </h3>
-            </motion.div>
-
-            {/* LABEL */}
-            <div className="relative mt-6 flex flex-col items-center">
-                <p className="text-gray-400 font-medium tracking-widest text-[10px] uppercase">
-                {item.label}
-                </p>
-                {/* Underline expansion */}
-                <div className="mt-2 w-0 group-hover:w-12 h-[2px] bg-[var(--accent)] transition-all duration-500" />
             </div>
 
-            {/* Sub-glow effect */}
-            <div className="absolute -bottom-10 -left-10 w-24 h-24 bg-[var(--accent)]/10 blur-3xl group-hover:bg-[var(--accent)]/30 transition-all duration-500" />
+            {/* LABEL */}
+            <div className="relative mt-3 md:mt-6 flex flex-col items-center">
+                <p className="text-gray-400 font-medium tracking-widest text-[8px] md:text-[10px] text-center uppercase leading-tight">
+                {item.label}
+                </p>
+                {/* Accent Line */}
+                <div className="mt-2 w-6 md:w-0 md:group-hover:w-12 h-[1px] md:h-[2px] bg-[var(--accent)]/40 md:bg-[var(--accent)] transition-all duration-500" />
+            </div>
+
+            {/* Subtle corner glow */}
+            <div className="absolute -top-10 -right-10 w-20 h-20 bg-[var(--accent)]/5 blur-2xl group-hover:bg-[var(--accent)]/15 transition-all duration-500" />
           </motion.div>
         ))}
       </motion.div>
