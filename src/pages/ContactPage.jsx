@@ -9,8 +9,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 // --- API CONFIGURATION ---
 const API_CONFIG = {
-  CONTACT: "https://demo-rnmwmu34f-ishas-projects-3966c652.vercel.app/api/contact", // 
-  QUOTATION: "https://demo-rnmwmu34f-ishas-projects-3966c652.vercel.app/api/quotation/submit" // 
+  CONTACT: "https://demo-1tkadua3s-ishas-projects-3966c652.vercel.app/api/contact", // 
+  QUOTATION: "https://demo-1tkadua3s-ishas-projects-3966c652.vercel.app/api/quotation/submit" // 
 };
 
 // --- UI Component: Standard Input Field (Updated for State) ---
