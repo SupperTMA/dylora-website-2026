@@ -376,69 +376,71 @@ const ServicesPage = () => {
                 className="absolute inset-0 bg-gradient-to-t from-[#B5E77D]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg pointer-events-none"
               />
 
-              {/* Popup Card on Hover - Desktop Only */}
+              {/* Popup Card on Hover - Desktop Only - PERFECTLY CENTERED */}
               {hoveredCard === service.id && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9, y: -20 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.9, y: -20 }}
-                  transition={{ duration: 0.3, type: "spring", stiffness: 300 }}
-                  className="hidden md:block absolute bottom-full left-1/2 -translate-x-1/2 mb-4 w-[340px] lg:w-[380px] bg-gradient-to-br from-[#1a1a1a] via-[#0a0a0a] to-black border-2 border-[#B5E77D] rounded-2xl p-4 lg:p-6 shadow-2xl shadow-[#B5E77D]/30 z-[100]"
-                  style={{
-                    backdropFilter: "blur(10px)",
-                  }}
-                >
-                  {/* Arrow pointing down to card */}
-                  <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-[#B5E77D] rotate-45" />
-                  
-                  {/* Content */}
-                  <div className="relative z-10">
-                    {/* Title with icon */}
-                    <div className="flex items-center gap-3 mb-4 pb-4 border-b border-[#B5E77D]/30">
-                      <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl bg-[#B5E77D]/10 flex items-center justify-center flex-shrink-0">
-                        <img src={service.icon} alt="" className="w-6 h-6 lg:w-8 lg:h-8 object-contain" />
+                <div className="hidden md:block absolute bottom-full left-0 right-0 mb-4 flex justify-center pointer-events-none z-[200]">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9, y: -20 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.9, y: -20 }}
+                    transition={{ duration: 0.3, type: "spring", stiffness: 300 }}
+                    className="pointer-events-auto w-[340px] lg:w-[380px] bg-gradient-to-br from-[#1a1a1a] via-[#0a0a0a] to-black border-2 border-[#B5E77D] rounded-2xl p-4 lg:p-6 shadow-2xl shadow-[#B5E77D]/30"
+                    style={{
+                      backdropFilter: "blur(10px)",
+                    }}
+                  >
+                    {/* Arrow pointing down to card - exactly centered */}
+                    <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-[#B5E77D] rotate-45" />
+                    
+                    {/* Content */}
+                    <div className="relative z-10">
+                      {/* Title with icon */}
+                      <div className="flex items-center gap-3 mb-4 pb-4 border-b border-[#B5E77D]/30">
+                        <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl bg-[#B5E77D]/10 flex items-center justify-center flex-shrink-0">
+                          <img src={service.icon} alt="" className="w-6 h-6 lg:w-8 lg:h-8 object-contain" />
+                        </div>
+                        <h4 className="text-base lg:text-lg font-bold text-[#B5E77D]">{service.title}</h4>
                       </div>
-                      <h4 className="text-base lg:text-lg font-bold text-[#B5E77D]">{service.title}</h4>
-                    </div>
 
-                    {/* Tools/Technologies */}
-                    <div className="mb-4">
-                      <p className="text-xs font-semibold text-gray-400 mb-2 uppercase tracking-wider">Technologies</p>
-                      <div className="flex flex-wrap gap-2">
-                        {service.tools.map((tool, i) => (
-                          <span
-                            key={i}
-                            className="px-2 py-1 text-xs bg-[#B5E77D]/20 text-[#B5E77D] rounded-full border border-[#B5E77D]/40 font-medium"
-                          >
-                            {tool}
-                          </span>
-                        ))}
+                      {/* Tools/Technologies */}
+                      <div className="mb-4">
+                        <p className="text-xs font-semibold text-gray-400 mb-2 uppercase tracking-wider">Technologies</p>
+                        <div className="flex flex-wrap gap-2">
+                          {service.tools.map((tool, i) => (
+                            <span
+                              key={i}
+                              className="px-2 py-1 text-xs bg-[#B5E77D]/20 text-[#B5E77D] rounded-full border border-[#B5E77D]/40 font-medium"
+                            >
+                              {tool}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Key Features */}
+                      <div className="mb-4">
+                        <p className="text-xs font-semibold text-gray-400 mb-2 uppercase tracking-wider">Key Features</p>
+                        <ul className="space-y-2">
+                          {service.features.map((feature, i) => (
+                            <li key={i} className="flex items-center gap-2 text-xs lg:text-sm text-gray-300">
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#B5E77D] flex-shrink-0" />
+                              {feature}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      {/* Delivery Time */}
+                      <div className="pt-3 border-t border-[#B5E77D]/30 flex items-center justify-between">
+                        <span className="text-xs text-gray-400">Delivery Time</span>
+                        <span className="text-sm font-bold text-[#B5E77D]">{service.deliveryTime}</span>
                       </div>
                     </div>
 
-                    {/* Key Features */}
-                    <div className="mb-4">
-                      <p className="text-xs font-semibold text-gray-400 mb-2 uppercase tracking-wider">Key Features</p>
-                      <ul className="space-y-2">
-                        {service.features.map((feature, i) => (
-                          <li key={i} className="flex items-center gap-2 text-xs lg:text-sm text-gray-300">
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#B5E77D] flex-shrink-0" />
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    {/* Delivery Time */}
-                    <div className="pt-3 border-t border-[#B5E77D]/30 flex items-center justify-between">
-                      <span className="text-xs text-gray-400">Delivery Time</span>
-                      <span className="text-sm font-bold text-[#B5E77D]">{service.deliveryTime}</span>
-                    </div>
-                  </div>
-
-                  {/* Glow effect */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#B5E77D]/5 to-transparent rounded-2xl pointer-events-none" />
-                </motion.div>
+                    {/* Glow effect */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#B5E77D]/5 to-transparent rounded-2xl pointer-events-none" />
+                  </motion.div>
+                </div>
               )}
             </motion.div>
           ))}
@@ -708,6 +710,6 @@ const ServicesPage = () => {
       />
     </div>
   );
-};  // new one 
+};
 
 export default ServicesPage;
