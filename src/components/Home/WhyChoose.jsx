@@ -37,12 +37,10 @@ const WhyChoose = () => {
   const isIntroComplete = useRef(false);
   
   useLayoutEffect(() => {
-    // Determine screen size for calculations
     const isMobile = window.innerWidth < 768;
     
-    // FIX 1: Tighter rotation on mobile to prevent corner clipping
     const spacingRot = isMobile ? 4 : 6; 
-    const spacingX = isMobile ? 30 : 60; 
+    const spacingX = isMobile ? 25 : 60; 
 
     const ctx = gsap.context(() => {
       const cards = gsap.utils.toArray('.fan-card');
@@ -82,7 +80,6 @@ const WhyChoose = () => {
               gsap.to(card, {
                 duration: 0.4, overwrite: true, ease: "back.out(1.4)",
                 x: offset * config.spacingX, 
-                // FIX 2: Set Y to 0 on mobile. (Was -30, which pushed it off screen top)
                 y: isMobile ? 0 : -60, 
                 rotate: 0, 
                 scale: 1.15, 
@@ -109,59 +106,73 @@ const WhyChoose = () => {
         });
       }
 
-      // Initial State
+      // Initial Setup
       gsap.set(cards, {
-        x: 0,
-        y: 100,
-        rotate: 0,
-        scale: 0.9,
-        zIndex: (i) => getBaseZIndex(i)
+        x: 0, y: 100, rotate: 0, scale: 0.9, zIndex: (i) => getBaseZIndex(i)
       });
 
+      // Intro Animation
       ScrollTrigger.create({
         trigger: containerRef.current,
         start: "top 70%",
         onEnter: () => {
           cards.forEach((card, index) => {
             const offset = index - config.centerIndex;
-            
             gsap.to(card, {
-              duration: 1.75,
-              ease: "elastic.out(1, 0.6)",
-              delay: index * 0.05,
+              duration: 1.75, ease: "elastic.out(1, 0.6)", delay: index * 0.05,
               x: offset * config.spacingX,
               y: Math.abs(offset) * 15,
               rotate: offset * config.spacingRot,
               scale: index === centerIndex ? 1.05 : 0.9,
               onComplete: () => {
-                if (index === cards.length - 1) {
-                  isIntroComplete.current = true;
-                }
+                if (index === cards.length - 1) isIntroComplete.current = true;
               }
             });
-            const bg = card.querySelector('.card-bg');
-            gsap.to(bg, { opacity: 0.2, duration: 0.5 });
+            gsap.to(card.querySelector('.card-bg'), { opacity: 0.2, duration: 0.5 });
           });
         }
       });
 
+      // --- EVENT LISTENERS ---
       cards.forEach((card, index) => {
-        card.addEventListener('mouseenter', () => {
-          if (currentActive !== index) { currentActive = index; updateCards(index); }
-        });
-        card.addEventListener('click', () => {
+      
+        if (!isMobile) {
+          card.addEventListener('mouseenter', () => {
+            if (currentActive !== index) { currentActive = index; updateCards(index); }
+          });
+        }
+
+        // 'Click' handles the interaction for both, ensuring 1-tap open on mobile.
+        card.addEventListener('click', (e) => {
+          e.stopPropagation(); // Stop click from bubbling to document (prevent immediate closing)
           if (currentActive !== index) { currentActive = index; updateCards(index); }
           else { currentActive = null; updateCards(null); }
         });
       });
 
-      const handleGlobalMouseOver = (e) => {
+      
+      const handleGlobalClick = (e) => {
+        // If the click target is NOT inside a fan-card, close everything
         if (!e.target.closest('.fan-card') && currentActive !== null) {
-          currentActive = null; updateCards(null);
+          currentActive = null;
+          updateCards(null);
         }
       };
-      document.addEventListener('mouseover', handleGlobalMouseOver);
-      return () => document.removeEventListener('mouseover', handleGlobalMouseOver);
+
+      if (isMobile) {
+       
+        document.addEventListener('click', handleGlobalClick);
+      } else {
+        // On Desktop: Keep the hover-based closing mechanism
+        document.addEventListener('mouseover', handleGlobalClick);
+      }
+
+      // Cleanup
+      return () => {
+        if (isMobile) document.removeEventListener('click', handleGlobalClick);
+        else document.removeEventListener('mouseover', handleGlobalClick);
+      };
+
     }, containerRef);
     return () => ctx.revert();
   }, []);
@@ -173,13 +184,12 @@ const WhyChoose = () => {
         <p className="text-gray-400 text-sm md:text-base">Technical precision meets creative innovation.</p>
       </div>
 
-      {/* FIX 3: Increased Height on mobile (h-[600px]) so rotated cards don't clip at bottom */}
-      <div ref={containerRef} className="relative w-full h-[600px] md:h-[450px] flex justify-center items-center perspective-1000 pointer-events-none">
+      <div ref={containerRef} className="relative w-full h-[500px] md:h-[450px] flex justify-center items-center perspective-1000 pointer-events-none">
         {FAN_CARDS.map((card, index) => (
           <div 
             key={index} 
-            // Mobile: slightly narrower (60vw) to prevent side clipping during rotation
-            className="fan-card absolute w-[60vw] md:w-[280px] h-[360px] md:h-[460px] rounded-[20px] p-6 bg-[#0a0a0a] border border-[#D9F99D]/20 hover:border-[#D9F99D] shadow-2xl flex flex-col justify-end pointer-events-auto cursor-pointer will-change-transform origin-bottom-center transition-colors duration-300"
+           
+            className="fan-card absolute w-[45vw] md:w-[280px] h-[300px] md:h-[460px] rounded-[20px] p-6 bg-[#0a0a0a] border border-[#D9F99D]/20 hover:border-[#D9F99D] shadow-2xl flex flex-col justify-end pointer-events-auto cursor-pointer will-change-transform origin-bottom-center transition-colors duration-300"
           >
             <img 
               className="card-bg absolute top-0 left-0 w-full h-full object-cover rounded-[20px] pointer-events-none" 
@@ -190,7 +200,7 @@ const WhyChoose = () => {
             <div className="absolute bottom-0 left-0 w-full h-[60%] bg-gradient-to-t from-black via-black/50 to-transparent pointer-events-none rounded-b-[20px]" />
 
             <div className="relative z-10 pointer-events-none">
-              <h3 className="text-xl md:text-2xl font-bold text-white mb-2 font-display">{card.title}</h3>
+              <h3 className="text-lg md:text-2xl font-bold text-white mb-2 font-display">{card.title}</h3>
               <p className="text-xs md:text-sm text-[#D9F99D] opacity-0 translate-y-2 leading-relaxed font-mono">
                 {card.desc}
               </p>
