@@ -42,33 +42,27 @@ const EXTENDED_TESTIMONIALS = [
 const Testimonials = () => {
   return (
     <section className="py-32 border-t border-white/10 overflow-hidden bg-[#050505]">
-      <div className="px-6 max-w-[1800px] mx-auto mb-16">
-        <div className="flex justify-between items-end">
-          <h2 className="font-display text-6xl scramble-text" data-original="Client Stories">
-            Client Stories
-          </h2>
-          <div className="hidden md:block w-32 h-[1px] bg-white/20"></div>
-        </div>
-      </div>
 
       {/* SCROLLING CONTAINER */}
       <div className="relative w-full">
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#050505] to-transparent z-10 pointer-events-none"></div>
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#050505] to-transparent z-10 pointer-events-none"></div>
+      
 
-        <div className="flex gap-12 w-max animate-marquee hover:[animation-play-state:paused]">
+        <div className="flex gap-4 md:gap-12 w-max animate-marquee hover:[animation-play-state:paused]">
           {/* ORIGINAL SET */}
           {[...EXTENDED_TESTIMONIALS, ...EXTENDED_TESTIMONIALS].map((testimonial, index) => (
-            // CHANGED: Width to 600px, Padding to p-10
+            
+  
+            // FIX: Adjusted padding for mobile p-6 md:p-10
             <div 
               key={index} 
-              className="w-[600px] glass-panel p-10 hover:bg-white/5 transition-all group hover-trigger relative overflow-hidden testimonial-card flex-shrink-0"
+              className="w-[85vw] md:w-[600px] glass-panel p-6 md:p-10 hover:bg-white/5 transition-all group hover-trigger relative overflow-hidden testimonial-card flex-shrink-0"
             >
               <div className="absolute top-0 right-0 p-6 opacity-20 text-[8rem] leading-none font-serif text-accent">"</div>
               <div className="relative z-10">
-                <div className="flex items-center gap-8 mb-8">
-                  <div className="relative">
-                    <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-white/10 group-hover:border-accent transition-colors duration-300">
+                <div className="flex items-center gap-4 md:gap-8 mb-8">
+                  {/* ... Image and Name section ... */}
+                   <div className="relative">
+                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border-2 border-white/10 group-hover:border-accent transition-colors duration-300">
                       <img 
                         src={testimonial.image} 
                         alt={testimonial.name}
@@ -77,12 +71,12 @@ const Testimonials = () => {
                     </div>
                   </div>
                   <div>
-                    <h4 className="font-bold text-2xl text-white">{testimonial.name}</h4>
-                    <p className="text-sm font-mono text-gray-500">{testimonial.role}</p>
+                    <h4 className="font-bold text-xl md:text-2xl text-white">{testimonial.name}</h4>
+                    <p className="text-xs md:text-sm font-mono text-gray-500">{testimonial.role}</p>
                     <span className="text-accent text-sm mt-2 block">{testimonial.rating}</span>
                   </div>
                 </div>
-                <p className="text-gray-300 text-lg leading-relaxed">
+                <p className="text-gray-300 text-base md:text-lg leading-relaxed">
                   {testimonial.quote}
                 </p>
               </div>
